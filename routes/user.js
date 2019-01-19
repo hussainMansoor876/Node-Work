@@ -4,7 +4,11 @@ const Users = require('../model/Users')
 
 router.get('/get/:id',(req,res)=>{
     console.log('Get',req.params.id)
-    res.send({name: 'Mansoor',email:'hussain@gmail.com'})
+    Users.findById({_id: '5c40a9663313fb1ae0592755'})
+    .then((response)=>{
+        return res.send(response)
+    })
+    .catch(e=> console.log(e))
 })
 
 router.get('/getAll',(req,res)=>{
@@ -26,6 +30,19 @@ router.delete('/del',(req,res)=>{
     })
     .catch(e => res.send({message: e.message}))
 })
+
+router.put('/put',(req,res)=>{
+    const { body } = req;
+    console.log(body)
+    
+    Users.updateOne({name: "Hussain"}, { name: body.name} )
+    .then((response)=>{
+        console.log('im running')
+        res.send({ message: 'User Update Successfully', response })
+    })
+    .catch(e => res.send({message: e.message}))
+})
+
 
 // router.post('/del',(req,res)=>{
 //     const { body } = req;
